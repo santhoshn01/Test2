@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'maven-publish'
+    id 'com.jfrog.artifactory' version '4.26.2'
 }
 
 group = 'org.example'
@@ -25,13 +26,29 @@ publishing {
             from components.java
         }
     }
-    artifactory {
-    contextUrl = 'http://192.168.100.62:8082/artifactory/test-jenkins-artifactory/'
-    publish {
-        repository {
-            username = 'admin'
-            password = 'Chella*123'
-        }
+    repositories {
+        maven {
+            url = uri("http://192.168.100.62:8082/artifactory/libs-release-local")
+            credentials {
+                username = 'admin'
+                password = 'Chella*123'
             }
         }
     }
+}
+
+artifactory {
+    contextUrl = 'http://192.168.100.62:8082/artifactory'
+    publish {
+        repository {
+            repoKey = 'libs-release-local'
+            username = 'admin'
+            password = 'Chella*123'
+        }
+        defaults {
+            publications('mavenJava')
+            publishArtifacts = true
+            publishPom = true
+        }
+    }
+}
