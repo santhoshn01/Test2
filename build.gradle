@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'com.jfrog.artifactory' version "4.26.2"
+    id 'maven-publish'
 }
 
 group = 'org.example'
@@ -11,24 +11,27 @@ repositories {
 }
 
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
 }
 
 test {
     useJUnitPlatform()
 }
 
-artifactory {
-    contextUrl = 'http://192.168.100.62:8082/artifactory/test-jenkins-artifactory/'
-    publish {
-        repository {
-            username = 'admin'
-            password = 'Chella*123'
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
         }
-        defaults {
-            publications("mavenJava")
-            publishBuildInfo = true
+    }
+    repositories {
+        maven {
+            url = uri("http://your-artifactory-repo-url")
+            credentials {
+                username = project.findProperty("artifactory_user") ?: ""
+                password = project.findProperty("artifactory_password") ?: ""
+            }
         }
     }
 }
