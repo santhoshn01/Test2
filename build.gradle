@@ -25,13 +25,13 @@ publishing {
             from components.java
         }
     }
-    repositories {
-        maven {
-            url = uri("http://your-artifactory-repo-url")
-            credentials {
-                username = project.findProperty("artifactory_user") ?: ""
-                password = project.findProperty("artifactory_password") ?: ""
+    artifactory {
+    contextUrl = 'http://192.168.100.62:8082/artifactory/test-jenkins-artifactory/'
+    publish {
+        repository {
+            username = 'admin'
+            password = 'Chella*123'
+        }
             }
         }
     }
-}
