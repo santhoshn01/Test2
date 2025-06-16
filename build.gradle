@@ -26,5 +26,9 @@ artifactory {
             username = 'admin'
             password = 'Chella*123'
         }
+        defaults {
+            publications("mavenJava")
+            publishBuildInfo = true
+        }
     }
 }
