@@ -57,8 +57,8 @@ artifactory {
 // SonarQube configuration
 sonar {
     properties {
-        property 'sonar.projectKey', 'Test2'
-        property 'sonar.projectName', 'Test2'
+        property 'sonar.projectKey', 'Test.jenkins.1'
+        property 'sonar.projectName', 'Test jenkins 1'
         property 'sonar.projectVersion', '1.0'
         property 'sonar.sources', 'src'
         property 'sonar.host.url', 'http://localhost:9000'
