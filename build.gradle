@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'maven-publish'
     id 'com.jfrog.artifactory' version '4.26.2'
-    id 'org.sonarqube' version '6.1.0.5360' // SonarQube plugin
+    id 'org.sonarqube' version '6.1.0.5360' // Ensure this is the latest compatible version
 }
 
 group = 'org.example'
@@ -55,7 +55,7 @@ artifactory {
 }
 
 // SonarQube configuration
-    sonar {
+sonar {
     properties {
         property 'sonar.projectKey', 'my-project-key'
         property 'sonar.projectName', 'My Project Name'
