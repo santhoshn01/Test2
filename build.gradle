@@ -54,14 +54,4 @@ artifactory {
     }
 }
 
-// SonarQube configuration
-sonar {
-    properties {
-        property 'sonar.projectKey', 'Test.jenkins.1'
-        property 'sonar.projectName', 'Test jenkins 1'
-        property 'sonar.projectVersion', '1.0'
-        property 'sonar.sources', 'src'
-        property 'sonar.host.url', 'http://localhost:9000'
-        property 'sonar.login', findProperty('sonar.login') ?: System.getenv('SONAR_TOKEN')
-    }
-}
+
