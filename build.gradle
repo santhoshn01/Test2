@@ -55,10 +55,13 @@ artifactory {
 }
 
 // SonarQube configuration
-sonarqube {
+    sonar {
     properties {
-       property 'sonar.projectKey', 'my-project' // Unique project key
-        property 'sonar.host.url', 'http://localhost:9000' // Local SonarQube server URL
+        property 'sonar.projectKey', 'my-project-key'
+        property 'sonar.projectName', 'My Project Name'
+        property 'sonar.projectVersion', '1.0'
+        property 'sonar.sources', 'src'
+        property 'sonar.host.url', 'http://localhost:9000'
         property 'sonar.login', findProperty('sonar.login') ?: System.getenv('SONAR_TOKEN')
     }
 }
