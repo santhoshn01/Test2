@@ -57,9 +57,8 @@ artifactory {
 // SonarQube configuration
 sonarqube {
     properties {
-        property 'sonar.projectKey', 'org.example:my-project'
-        property 'sonar.organization', 'your-organization'
-        property 'sonar.host.url', 'https://sonarcloud.io'
+       property 'sonar.projectKey', 'my-project' // Unique project key
+        property 'sonar.host.url', 'http://localhost:9000' // Local SonarQube server URL
         property 'sonar.login', findProperty('sonar.login') ?: System.getenv('SONAR_TOKEN')
     }
 }
