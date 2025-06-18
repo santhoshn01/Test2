@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'maven-publish'                                      // ✅ Required for maven publishing
     id 'com.jfrog.artifactory' version '4.26.2'
     id 'org.sonarqube' version '6.1.0.5360'
 }
@@ -28,6 +29,14 @@ test {
     }
 }
 
+publishing {                                            // ✅ Define the mavenJava publication
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
 artifactory {
     contextUrl = 'http://192.168.100.62:8082/artifactory'
     publish {
@@ -37,8 +46,9 @@ artifactory {
             password = project.findProperty("artifactory_password") ?: "Chella*123"
         }
         defaults {
-            publications('mavenJava')
+            publications('mavenJava')                    // ✅ Refer to the publication defined above
             publishArtifacts = true
+            publishPom = true
         }
     }
 }
