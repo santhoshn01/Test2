@@ -21,11 +21,14 @@ test {
     useJUnitPlatform()
 
     reports {
-        junitXml.enabled = true
-        junitXml.destination = file("$buildDir/test-results/test")
-        html.enabled = true // Optional: generates a human-readable HTML report
+        junitXml.required.set(true)
+        junitXml.outputLocation.set(layout.buildDirectory.dir("test-results/test"))
+
+        html.required.set(true)
+        html.outputLocation.set(layout.buildDirectory.dir("reports/tests/test"))
     }
 }
+
 
 
 publishing {
