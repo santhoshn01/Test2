@@ -1,8 +1,7 @@
 plugins {
     id 'java'
-    id 'maven-publish'
     id 'com.jfrog.artifactory' version '4.26.2'
-    id 'org.sonarqube' version '6.1.0.5360' // Ensure this is the latest compatible version
+    id 'org.sonarqube' version '6.1.0.5360'
 }
 
 group = 'org.example'
@@ -14,7 +13,7 @@ repositories {
 
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
-    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
 }
 
 test {
@@ -29,7 +28,20 @@ test {
     }
 }
 
-
+artifactory {
+    contextUrl = 'http://192.168.100.62:8082/artifactory'
+    publish {
+        repository {
+            repoKey = 'libs-release-local'
+            username = project.findProperty("artifactory_user") ?: "admin"
+            password = project.findProperty("artifactory_password") ?: "Chella*123"
+        }
+        defaults {
+            publications('mavenJava')
+            publishArtifacts = true
+        }
+    }
+}
 
 publishing {
     publications {
@@ -37,31 +49,4 @@ publishing {
             from components.java
         }
     }
-    repositories {
-        maven {
-            url = uri("http://192.168.100.62:8082/artifactory/libs-release-local")
-            credentials {
-                username = 'admin'
-                password = 'Chella*123'
-            }
-        }
-    }
 }
-
-artifactory {
-    contextUrl = 'http://192.168.100.62:8082/artifactory'
-    publish {
-        repository {
-            repoKey = 'libs-release-local'
-            username = 'admin'
-            password = 'Chella*123'
-        }
-        defaults {
-            publications('mavenJava')
-            publishArtifacts = true
-            publishPom = true
-        }
-    }
-}
-
-
