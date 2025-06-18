@@ -19,7 +19,14 @@ dependencies {
 
 test {
     useJUnitPlatform()
+
+    reports {
+        junitXml.enabled = true
+        junitXml.destination = file("$buildDir/test-results/test")
+        html.enabled = true // Optional: generates a human-readable HTML report
+    }
 }
+
 
 publishing {
     publications {
