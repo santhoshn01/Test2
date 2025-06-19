@@ -1,18 +1,17 @@
 plugins {
     id 'java'
     id 'application'
-    id 'com.github.johnrengelman.shadow' version '8.1.0'
     id 'maven-publish'
     id 'com.jfrog.artifactory' version '4.26.2'
     id 'org.sonarqube' version '6.1.0.5360'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 group = 'org.example'
 version = '1.1.0.1'
 
 application {
-    // Replace with your actual main class:
-    mainClass = 'org.example.YourMainClass'
+    mainClass = 'org.example.Main'
 }
 
 repositories {
@@ -20,11 +19,10 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
 }
 
-// Include tests config as before
 test {
     useJUnitPlatform()
     reports {
@@ -35,26 +33,22 @@ test {
     }
 }
 
-// Create a lean JAR containing only your classes (no dependencies)
 jar {
-    archiveBaseName.set("app")
-    archiveVersion.set(version)
     manifest {
-        attributes 'Main-Class': application.mainClass.get()
+        attributes(
+            'Main-Class': application.mainClass.get()
+        )
     }
-    from sourceSets.main.output
 }
 
-// Create a “fat” JAR using Shadow plugin—packaging dependencies too
+// Shadow JAR task for executable fat JAR
 shadowJar {
-    archiveBaseName.set("app")
+    archiveBaseName.set('app')
     archiveVersion.set(version)
-    archiveClassifier.set("all")
+    archiveClassifier.set('all') // app-1.1.0.1-all.jar
     manifest {
         attributes 'Main-Class': application.mainClass.get()
     }
-    // Optional: merge service descriptors to avoid conflicts
-    mergeServiceFiles()
 }
 
 publishing {
