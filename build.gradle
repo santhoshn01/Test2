@@ -7,7 +7,7 @@ plugins {
 
 group = 'org.example'
 
-// Custom version
+// Define the application version here
 def appVersion = '1.1.0.1'
 version = appVersion
 
@@ -30,14 +30,14 @@ test {
     }
 }
 
-// JAR customization
+// Customize the JAR output name
 jar {
     archiveBaseName.set("app")
     archiveVersion.set(appVersion)
     archiveClassifier.set("")
 }
 
-// Maven publishing
+// Maven publishing configuration
 publishing {
     publications {
         mavenJava(MavenPublication) {
@@ -46,7 +46,7 @@ publishing {
     }
 }
 
-// Artifactory publish
+// Artifactory publishing configuration
 def isSnapshot = version.endsWith('-SNAPSHOT')
 
 artifactory {
