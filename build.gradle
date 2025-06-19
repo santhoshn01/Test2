@@ -7,9 +7,7 @@ plugins {
 
 group = 'org.example'
 
-// Define the application version here
-def appVersion = '1.1.0.1'
-version = appVersion
+version = '1.1.0.1'  // Set version directly as a string
 
 repositories {
     mavenCentral()
@@ -30,14 +28,12 @@ test {
     }
 }
 
-// Customize the JAR output name
 jar {
     archiveBaseName.set("app")
-    archiveVersion.set(appVersion)
+    archiveVersion.set(version)  // Use the direct version
     archiveClassifier.set("")
 }
 
-// Maven publishing configuration
 publishing {
     publications {
         mavenJava(MavenPublication) {
@@ -46,7 +42,6 @@ publishing {
     }
 }
 
-// Artifactory publishing configuration
 def isSnapshot = version.endsWith('-SNAPSHOT')
 
 artifactory {
