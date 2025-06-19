@@ -45,7 +45,7 @@ jar {
 shadowJar {
     archiveBaseName.set('app')
     archiveVersion.set(version)
-    archiveClassifier.set('all') // app-1.1.0.1-all.jar
+    archiveClassifier.set('') // app-1.1.0.1-all.jar
     manifest {
         attributes 'Main-Class': application.mainClass.get()
     }
