@@ -1,12 +1,15 @@
 plugins {
     id 'java'
-    id 'maven-publish'                                      // Required for Maven publishing
+    id 'maven-publish'
     id 'com.jfrog.artifactory' version '4.26.2'
     id 'org.sonarqube' version '6.1.0.5360'
 }
 
 group = 'org.example'
-version = '1.0-SNAPSHOT' // Change to '1.0.0' for release builds if needed
+
+// Custom version
+def appVersion = '1.1.0.1'
+version = appVersion
 
 repositories {
     mavenCentral()
@@ -19,17 +22,22 @@ dependencies {
 
 test {
     useJUnitPlatform()
-
     reports {
         junitXml.required.set(true)
         junitXml.outputLocation.set(layout.buildDirectory.dir("test-results/test"))
-
         html.required.set(true)
         html.outputLocation.set(layout.buildDirectory.dir("reports/tests/test"))
     }
 }
 
-// Maven publishing setup
+// JAR customization
+jar {
+    archiveBaseName.set("app")
+    archiveVersion.set(appVersion)
+    archiveClassifier.set("")
+}
+
+// Maven publishing
 publishing {
     publications {
         mavenJava(MavenPublication) {
@@ -38,14 +46,13 @@ publishing {
     }
 }
 
-// Artifactory publish setup
+// Artifactory publish
 def isSnapshot = version.endsWith('-SNAPSHOT')
 
 artifactory {
     contextUrl = 'http://192.168.100.62:8082/artifactory'
     publish {
         repository {
-            // Dynamically choose repo based on version
             repoKey = isSnapshot ? 'libs-snapshot-local' : 'libs-release-local'
             username = project.findProperty("artifactory_user") ?: "admin"
             password = project.findProperty("artifactory_password") ?: "Chella*123"
