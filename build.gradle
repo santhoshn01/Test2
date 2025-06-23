@@ -45,7 +45,7 @@ jar {
 shadowJar {
     archiveBaseName.set('app')
     archiveVersion.set(version)
-    archiveClassifier.set('') // app-1.1.0.1-all.jar
+    archiveClassifier.set('') // will produce app-1.1.0.2.jar
     manifest {
         attributes 'Main-Class': application.mainClass.get()
     }
@@ -54,12 +54,23 @@ shadowJar {
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            from components.java
+            // Publish the shadow jar artifact instead of the default jar
+            artifact shadowJar.archiveFile {
+                builtBy shadowJar
+            }
+            
+            // Optional: publish pom metadata
+            pom {
+                withXml {
+                    // Customize POM here if needed
+                }
+            }
         }
     }
 }
 
 def isSnapshot = version.endsWith('-SNAPSHOT')
+
 artifactory {
     contextUrl = 'http://192.168.100.62:8082/artifactory'
     publish {
