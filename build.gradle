@@ -42,7 +42,7 @@ jar {
 }
 
 shadowJar {
-    archiveBaseName.set('app')               // Output: app-<version>.jar
+    archiveBaseName.set('app')               // Produces: app-<version>.jar
     archiveVersion.set(version)
     archiveClassifier.set('')                // No -all or -shadow suffix
     manifest {
@@ -50,16 +50,14 @@ shadowJar {
     }
 }
 
-// ✅ Corrected publishing section to use the actual shadow JAR file
+// Publishing configuration - publish shadow JAR instead of default JAR
 publishing {
     publications {
         mavenJava(MavenPublication) {
             artifact(shadowJar.archiveFile) {
-            builtBy shadowJar
+                builtBy shadowJar
             }
 
-
-            // Optional: customize POM metadata
             pom {
                 name = 'Example App'
                 description = 'An example Java application'
