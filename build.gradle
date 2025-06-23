@@ -41,28 +41,40 @@ jar {
     }
 }
 
-// Shadow JAR task for executable fat JAR
 shadowJar {
-    archiveBaseName.set('app')
+    archiveBaseName.set('app')               // Output: app-<version>.jar
     archiveVersion.set(version)
-    archiveClassifier.set('') // will produce app-1.1.0.2.jar
+    archiveClassifier.set('')                // No -all or -shadow suffix
     manifest {
         attributes 'Main-Class': application.mainClass.get()
     }
 }
 
+// ✅ Corrected publishing section to use the actual shadow JAR file
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            // Publish the shadow jar artifact instead of the default jar
-            artifact shadowJar.archiveFile {
+            artifact shadowJar.outputs.files.singleFile {
                 builtBy shadowJar
             }
-            
-            // Optional: publish pom metadata
+
+            // Optional: customize POM metadata
             pom {
-                withXml {
-                    // Customize POM here if needed
+                name = 'Example App'
+                description = 'An example Java application'
+                url = 'https://github.com/example/example-app'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'dev'
+                        name = 'Developer'
+                        email = 'dev@example.com'
+                    }
                 }
             }
         }
