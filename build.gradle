@@ -54,9 +54,10 @@ shadowJar {
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            artifact shadowJar.outputs.files.singleFile {
-                builtBy shadowJar
+            artifact(shadowJar.archiveFile) {
+            builtBy shadowJar
             }
+
 
             // Optional: customize POM metadata
             pom {
