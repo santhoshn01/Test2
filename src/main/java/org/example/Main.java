@@ -11,14 +11,13 @@ public class Main {
 
         String userName = myObj.nextLine();  // Read user input
         System.out.println("Username is: " + userName);
-        
-        // Unused variable - will trigger a code smell
-        int unusedVariable = 42;
+
+        myObj.close();  // Close the scanner
 
         try {
-            // Empty catch block - bad practice and usually flagged
+            // Simulate risky code
         } catch (Exception e) {
+            e.printStackTrace();  // Handle the exception
         }
     }
 }
-
