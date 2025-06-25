@@ -13,11 +13,5 @@ public class Main {
         System.out.println("Username is: " + userName);
 
         myObj.close();  // Close the scanner
-
-        try {
-            // Simulate risky code
-        } catch (Exception e) {
-            e.printStackTrace();  // Handle the exception
-        }
     }
 }
