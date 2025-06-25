@@ -6,12 +6,12 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Hello from Main");
 
-        Scanner myObj = new Scanner(System.in);  // Create a Scanner object
-        System.out.println("Enter username");
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter your name:");
+        String name = sc.nextLine();
 
-        String userName = myObj.nextLine();  // Read user input
-        System.out.println("Username is: " + userName);
+        System.out.println("Hello, " + name + " Welcome to the GeeksforGeeks.");
 
-        myObj.close();  // Close the scanner
+        sc.close();  // Close the scanner
     }
 }
